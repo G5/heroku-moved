@@ -2,6 +2,12 @@ require 'sinatra'
 
 get "/*" do
   to = ENV["MOVED_TO"]
+
+  if ENV["REAL_REDIRECT"] == "true"
+    redirect to(request.scheme + "://" + to + request.fullpath)
+    return
+  end
+
   <<-EOS
 <html>
   <body>
