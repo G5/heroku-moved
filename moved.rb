@@ -1,8 +1,9 @@
 require 'sinatra'
 
 get "/*" do
-  # Redirect all the things immediately with no path carried over
-  redirect to(ENV["MOVED_TO"])
+  # Redirect to websites overview for the relevant client
+  client_uid = ENV["G5_CLIENT_UID"].split('/').last
+  redirect to("#{ENV["MOVED_TO"]}/clients/#{client_uid}/websites")
   return
 
   to = ENV["MOVED_TO"]
