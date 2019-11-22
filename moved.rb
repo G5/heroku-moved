@@ -1,11 +1,21 @@
 require 'sinatra'
 
 get "/*" do
+  if request.fullpath == "/healthz"
+    return "OK"
+  end
+
   to = ENV["MOVED_TO"]
 
-  if ENV["REAL_REDIRECT"] == "true"
+  case ENV["REAL_REDIRECT"]
+  when "true"
     redirect to(request.scheme + "://" + to + request.fullpath)
     return
+  when "shallow"
+    redirect to(request.scheme + "://" + to )
+    return
+  else
+    raise "unknown REAL_REDIRECT configuration"
   end
 
   <<-EOS
