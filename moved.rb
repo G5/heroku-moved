@@ -14,8 +14,6 @@ get "/*" do
   when "shallow"
     redirect to(request.scheme + "://" + to )
     return
-  else
-    raise "unknown REAL_REDIRECT configuration"
   end
 
   <<-EOS
